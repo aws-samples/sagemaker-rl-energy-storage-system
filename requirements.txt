@@ -1,0 +1,9 @@
+gym
+tqdm
+sagemaker
+ray[rllib]==0.8.5
+gym 
+tensorflow==2.1.0 
+matplotlib 
+seaborn
+git-remote-codecommit
