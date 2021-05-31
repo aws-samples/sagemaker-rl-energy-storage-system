@@ -14,6 +14,8 @@ In this example, the simulated battery environment take reference to the paper [
 
 The battery simulation environment contains publicly available electric price dataset from Australian Energy Market Operator (AEOM), which you can download from [here](https://aemo.com.au/en/energy-systems/electricity/national-electricity-market-nem/data-nem/aggregated-data) as well.
 
+You can choose to use one month of data or manually concatenate multiple months depending on your use cases.
+
 ## What will you learn
 
 - Training a DQN agent using Amazon SageMaker RL
