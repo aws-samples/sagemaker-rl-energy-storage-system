@@ -1,0 +1,14 @@
+# Install these on python 3.5 to 3.7
+boto3
+gym
+matplotlib
+pandas
+pandas_bokeh
+ray[rllib]==0.8.5 #python 3.5 to 3.8
+sagemaker
+seaborn
+tensorflow==2.1.0 #python 3.5 to 3.7
+tqdm
+streamlit==0.82.0
+bokeh==2.2.0
+pandas_bokeh==0.5.5
