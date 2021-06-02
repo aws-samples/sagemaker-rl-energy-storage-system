@@ -78,7 +78,7 @@ def plot_analysis(df_history, episode: List = None):
     print(f"Average reward: {df_temp['reward'].sum():.02f}")
 
     funcs = (
-        partial(sns.lineplot, data=df_temp[["cost", "price"]]),
+        partial(sns.lineplot, data=df_temp[["average_energy_cost", "market_electric_price"]]),
         partial(sns.scatterplot, data=df_temp[["action"]]),
         partial(sns.lineplot, data=df_temp[["reward"]]),
         partial(sns.lineplot, data=df_temp[["total_reward"]]),
