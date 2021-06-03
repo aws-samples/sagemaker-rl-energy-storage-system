@@ -24,13 +24,22 @@ required_packages: List[str] = [
     "pandas",
     "pandas_bokeh>=0.5.5",
     "ray[rllib]==0.8.5",  # python 3.5 to 3.8
-    "sagemaker",
     "seaborn",
     "tensorflow==2.1.0",  # python 3.5 to 3.7
     "tqdm",
     "streamlit==0.82.0",
     "bokeh>=2.2.0",
 ]
+
+# Specific use case dependencies
+extras = {
+    "notebook": ["sagemaker"],
+}
+
+all_deps = required_packages.copy()
+for extra in extras.values():
+    all_deps.extend(extra)
+extras["all"] = all_deps
 
 setup(
     name=_pkg,
@@ -60,4 +69,5 @@ setup(
     ],
     python_requires=">=3.6.0,<3.8.0",
     install_requires=required_packages,
+    extras_require=extras,
 )
