@@ -15,14 +15,14 @@ def download_aeom_data(filepath: str):
 
 
 def check_data_exist():
-    filepath = pathlib.Path(__file__).parent.parent.parent / "data/sample-data.csv"
-    filepath.mkdir(parents=True, exist_ok=True)
-
+    data_dir = pathlib.Path(__file__).parent.parent.parent / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    filepath = data_dir / "sample-data.csv"
     if not filepath.exists():
         print("Downloading data...")
         download_aeom_data(filepath)
     else:
-        print("Data exists...")
+        print("Data already exists...")
 
 
 if __name__ == "__main__":
