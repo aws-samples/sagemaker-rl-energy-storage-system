@@ -117,7 +117,7 @@ def plot_reward(rewards_list: Sequence[float]) -> matplotlib.figure.Figure:
 
 
 def plot_analysis(df_history: pd.DataFrame, episode: List = None) -> matplotlib.figure.Figure:
-    """Plot analysis charts of an episode.
+    """Plot the evaluation charts of an episode.
 
     Args:
         df_history (pd.DataFrame): [description]
