@@ -1,1 +1,1 @@
-from .baseline import MovingAveragePriceAgent, PriceVsCostAgent, RandomAgent
+from .baseline import Agent, MovingAveragePriceAgent, PriceVsCostAgent, RandomAgent
