@@ -1,11 +1,10 @@
 from typing import List, Optional
 
-import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from .agents import Agent
-from .envs import SimpleBattery
+from ..envs import SimpleBattery
+from ._agents import Agent
 
 
 class TrainResult:
