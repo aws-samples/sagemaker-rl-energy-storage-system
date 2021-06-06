@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 from gym.spaces import Box, Discrete
 
-from energy_storage_system.utils import check_data_exist
+from ..utils import check_data_exist
 
 logging.basicConfig(
     level=logging.INFO,
