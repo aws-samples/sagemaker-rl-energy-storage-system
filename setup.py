@@ -49,7 +49,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     version=_version,
-    description="to give description",
+    description="RL agents and gym environment for Energy Storage System (ESS) arbitrage",
     long_description=read("README.md"),
     author="ProServe, AWS",
     url=f"https://github.com/aws-samples/{_repo}/",
