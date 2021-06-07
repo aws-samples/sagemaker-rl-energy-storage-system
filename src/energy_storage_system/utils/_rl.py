@@ -1,10 +1,10 @@
-from typing import List, Optional
+from typing import List
 
 import pandas as pd
 from tqdm import tqdm
 
+from ..agents import Agent
 from ..envs import SimpleBattery
-from ._agents import Agent
 
 
 class TrainResult:
@@ -18,7 +18,7 @@ class TrainResult:
         return sum(self.rewards_list) / len(self.rewards_list)
 
 
-def train(env: SimpleBattery, agent: Agent, episodes: int = 3000, seed: Optional[int] = None):
+def train(env: SimpleBattery, agent: Agent, episodes: int = 3000):
     if episodes < 1:
         raise ValueError(f"Number of episodes must be >1, but getting {episodes}.")
 
@@ -43,19 +43,33 @@ def train(env: SimpleBattery, agent: Agent, episodes: int = 3000, seed: Optional
     return TrainResult(rewards_list, history_list)
 
 
-def evaluate_episode(agent, env_config):
-    """
-    Run evaluation over a single episode.
+def evaluate_episode(agent: Agent, env: SimpleBattery) -> pd.DataFrame:
+    """Evaluate a single episode using a trained agent.
 
-    FIXME: this is for non-gym agent.
+    Args:
+        agent (Agent): trained agent.
+        env (SimpleBattery): battery environment.
 
-    Input:
-        agent: trained agent.
+    Returns:
+        pd.DataFrametype: result dataframe which has these columns::
+
+            [
+                "reward",
+                "total_reward",
+                "action",
+                "energy",
+                "average_energy_cost",
+                "market_electric_price",
+                "price_t1",
+                "price_t2",
+                "price_t3",
+                "price_t4",
+                "price_t5",   # FIXME: what happen when moving-avg-agent uses window_size != 5?
+            ]
     """
 
     evaluation_list: List = []
     done = False
-    env = SimpleBattery(env_config)
     state = env.reset()
     print(f"Index: {env.index}")
     total_rewards = 0
