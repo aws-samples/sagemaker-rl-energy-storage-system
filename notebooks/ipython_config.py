@@ -37,7 +37,6 @@ try:
         _pythonpath += [
             sys_path_append(_git_root_p),  # GIT_ROOT
             sys_path_append(_git_root_p / "src"),  # GIT_ROOT/src
-            sys_path_append(_git_root_p / "src" / "share"),  # GIT_ROOT/src/share
             sys_path_append(_git_root_p / "src" / "common"),  # GIT_ROOT/src/common
             sys_path_append(_git_root_p / "notebooks"),  # GIT_ROOT/notebooks
         ]
@@ -46,4 +45,3 @@ except:  # noqa: E722
 
 c.InteractiveShellApp.exec_lines = _pythonpath  # type: ignore # noqa: F821
 ########################################################################################
-
