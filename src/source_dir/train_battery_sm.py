@@ -3,11 +3,10 @@ from sagemaker_rl.ray_launcher import SageMakerRayLauncher
 
 
 class MyLauncher(SageMakerRayLauncher):
-
     def register_env_creator(self):
-        from battery_env_sm import SimpleBattery
-        register_env("SimpleBattery-v1",
-                     lambda env_config: SimpleBattery(env_config))
+        from energy_storage_system.envs import SimpleBattery
+
+        register_env("SimpleBattery-v1", lambda env_config: SimpleBattery(env_config))
 
     def get_experiment_config(self):
         multi = 1
@@ -18,7 +17,7 @@ class MyLauncher(SageMakerRayLauncher):
                 "config": {
                     "use_pytorch": True,
                     "env_config": {
-                        'MAX_STEPS_PER_EPISODE': 168,
+                        "MAX_STEPS_PER_EPISODE": 168,
                     },
                 },
                 "stop": {
@@ -27,9 +26,6 @@ class MyLauncher(SageMakerRayLauncher):
             }
         }
 
+
 if __name__ == "__main__":
-#     import ray
-#     import torch
-#     print("Ray version:", ray.__version__)
-#     print("Torch version:", torch.__version__)
     MyLauncher().train_main()
