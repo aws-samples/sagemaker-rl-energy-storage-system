@@ -1,5 +1,6 @@
 import argparse
 import warnings
+from typing import Sequence, Tuple
 
 import bokeh as bk
 import pandas as pd
@@ -15,11 +16,19 @@ except ImportError:
     )
     from pathlib import Path
 
-from report import ReportIO
+from .report import Report, ReportIO
 
 
 # Rewards chart.
-def plot_rewards(rewards_list, **kwargs):
+def plot_rewards(rewards_list: Sequence[float], **kwargs) -> bk.models.plots.Plot:
+    """Plot the interactive mean reward of each episode.
+
+    Args:
+        rewards_list (Sequence[float]): mean rewards from all episodes.
+
+    Returns:
+        matplotlib.figure.Figure: the plot.
+    """
     df = pd.DataFrame(
         {
             "rewards": rewards_list,
@@ -47,8 +56,16 @@ def plot_rewards(rewards_list, **kwargs):
     return plot
 
 
-# Evaluation charts.
-def plot_analysis(df, **kwargs):
+def plot_analysis(df: pd.DataFrame, **kwargs) -> bk.models.plots.Plot:
+    """Plot the interactive evaluation charts of an episode.
+
+    Args:
+        df (pd.DataFrame): training history.
+        kwargs: additional ``kwargs`` to `pandas_bokeh.plot_bokeh()`.
+
+    Returns:
+        bk.models.plots.Plot: the plot.
+    """
     kwargs = dict(**kwargs, show_figure=False)
     plots = [
         df[["cost", "price"]].plot_bokeh(
@@ -62,7 +79,14 @@ def plot_analysis(df, **kwargs):
     return plots
 
 
-def to_html(report, output_dir, figsize=(1280, 240)):
+def to_html(report: Report, output_dir: Path, figsize: Tuple[int, int] = (1280, 240)) -> None:
+    """Generate an interactive html report and save to disk.
+
+    Args:
+        report (Report): generate interactive html of this in-memory report.
+        output_dir (Path): the output directory.
+        figsize (Tuple[int, int], optional): size of individual charts. Defaults to (1280, 240).
+    """
     bk.io.save(
         plot_rewards(report.rewards_list, figsize=figsize),
         filename=(output_dir / "rewards.html"),
@@ -104,6 +128,7 @@ def to_html(report, output_dir, figsize=(1280, 240)):
 
 
 def main(input_dir, output_dir):
+    """CLI functionality."""
     report = ReportIO(input_dir).load()
     output_dir.mkdir(parents=True, exist_ok=True)
     to_html(report, output_dir)

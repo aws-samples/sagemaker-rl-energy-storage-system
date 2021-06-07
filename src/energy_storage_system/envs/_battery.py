@@ -17,15 +17,12 @@ import numpy as np
 import pandas as pd
 from gym.spaces import Box, Discrete
 
-from energy_storage_system.utils import check_data_exist
-
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s %(levelname)s] %(message)s",
     datefmt="%d-%b-%y %H:%M:%S",
 )
 
-check_data_exist()
 DATA = Path(__file__).parent.parent / "data/sample-data.csv"
 
 
