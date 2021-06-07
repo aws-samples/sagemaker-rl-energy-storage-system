@@ -31,7 +31,7 @@ def train(env: SimpleBattery, agent: Agent, episodes: int = 3000):
         total_rewards = 0
 
         while not done:
-            action = agent.get_action(state)
+            action = agent.compute_action(state)
             next_state, reward, done, info = env.step(action)
             total_rewards += reward
             history_list.append([i] + [total_rewards] + [action] + state)
@@ -75,7 +75,7 @@ def evaluate_episode(agent: Agent, env: SimpleBattery) -> pd.DataFrame:
     total_rewards = 0
 
     while not done:
-        action = agent.get_action(state)
+        action = agent.compute_action(state)
         next_state, reward, done, info = env.step(action)
         total_rewards += reward
         evaluation_list.append([reward] + [total_rewards] + [action] + state)

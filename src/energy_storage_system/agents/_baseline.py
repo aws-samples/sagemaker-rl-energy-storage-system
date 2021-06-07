@@ -7,7 +7,7 @@ from ..envs import SimpleBattery
 
 class Agent(ABC):
     @abstractmethod
-    def get_action(self, state) -> int:
+    def compute_action(self, state) -> int:
         pass
 
 
@@ -16,7 +16,7 @@ class RandomAgent(Agent):
 
     actions = (SimpleBattery.CHARGE, SimpleBattery.DISCHARGE, SimpleBattery.HOLD)
 
-    def get_action(self, state) -> int:
+    def compute_action(self, state) -> int:
         return np.random.choice(self.actions)
 
 
@@ -27,7 +27,7 @@ class PriceVsCostAgent(Agent):
     Sell: electric price > electric cost
     """
 
-    def get_action(self, state) -> int:
+    def compute_action(self, state) -> int:
         electric_price = state[2]
         electric_cost = state[1]
 
@@ -52,7 +52,7 @@ class MovingAveragePriceAgent(Agent):
             raise ValueError(f"Days must be > 0, but getting {days}")
         self.days = days
 
-    def get_action(self, state) -> int:
+    def compute_action(self, state) -> int:
         market_price = state[2]
         past_average_price = sum(state[-self.days :]) / len(state[-self.days :])
 
