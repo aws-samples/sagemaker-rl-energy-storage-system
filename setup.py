@@ -34,7 +34,9 @@ required_packages: List[str] = [
 # Specific use case dependencies
 extras = {
     "notebook": ["sagemaker"],
-    "direct_s3": ["git+https://github.com/aws-samples/smallmatter-package#egg=smallmatter"],
+
+    # See: https://stackoverflow.com/a/53706140
+    "direct_s3": ["smallmatter @ git+https://github.com/aws-samples/smallmatter-package"],
 }
 
 all_deps = required_packages.copy()
