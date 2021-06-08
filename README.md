@@ -37,7 +37,7 @@ Make sure your python virtual environment has necessary python packages installe
 |   `-- ipython_config.py        # IPython magic to let *.ipynb treat src/ as PYTHONPATH
 |-- setup.py                     # To install energy_storage_system as a Python module
 |-- src
-|   |-- demo
+|   |-- demo                     # Streamlit app
 |   |-- energy_storage_system    # Module energy_storage_system
 |   |-- sagemaker_rl             # Module sagemaker_rl used by SageMaker training job
 |   |-- smnb_utils               # Helper functions used by sample notebooks
