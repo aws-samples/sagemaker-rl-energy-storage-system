@@ -27,6 +27,24 @@ Make sure your python virtual environment has necessary python packages installe
 
 `pip install -r requirements.txt`
 
+## How this repository is organized
+
+```text
+.
+|-- bin                          # Script to prep SageMaker notebook instance for local mode
+|-- notebooks                    # Sample notebooks
+|   |-- *.ipynb
+|   `-- ipython_config.py        # IPython magic to let *.ipynb treat src/ as PYTHONPATH
+|-- setup.py                     # To install energy_storage_system as a Python module
+|-- src
+|   |-- demo
+|   |-- energy_storage_system    # Module energy_storage_system
+|   |-- sagemaker_rl             # Module sagemaker_rl used by SageMaker training job
+|   |-- smnb_utils               # Helper functions used by sample notebooks
+|   `-- source_dir               # SageMaker training job's source_dir and entrypoint script
+`-- tests                        # Unit tests for SageMaker's ray launcher
+```
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
