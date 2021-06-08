@@ -33,7 +33,9 @@ def generate_kinesis_create_permission_for_sagemaker_role(role):
 def generate_help_for_s3_endpoint_permissions(role):
     role_name = role.split("/")[-1]
     url = "https://console.aws.amazon.com/iam/home#/roles/%s" % role_name
-    text = ">It looks like your SageMaker role has insufficient premissions. Please do the following:\n"
+    text = (
+        ">Looks like your SageMaker role has insufficient permissions. Please do the following:\n"
+    )
     text += "1. Go to IAM console to edit current SageMaker role: [%s](%s).\n" % (role_name, url)
     text += "2. Select %s and then click on `Edit Policy`\n" % role_name
     text += "3. Select the JSON tab and add the following JSON blob to the `Statement` list:\n"
@@ -81,7 +83,9 @@ def generate_help_for_robomaker_trust_relationship(role):
 def generate_help_for_robomaker_all_permissions(role):
     role_name = role.split("/")[-1]
     url = "https://console.aws.amazon.com/iam/home#/roles/%s" % role_name
-    text = ">It looks like your SageMaker role has insufficient premissions. Please do the following:\n"
+    text = (
+        ">Looks like your SageMaker role has insufficient permissions. Please do the following:\n"
+    )
     text += "1. Go to IAM console to edit current SageMaker role: [%s](%s).\n" % (role_name, url)
     text += (
         "2. Click on policy starting with `AmazonSageMaker-ExecutionPolicy` and then edit policy.\n"
@@ -172,14 +176,17 @@ def create_s3_endpoint_manually(aws_region, default_vpc):
         aws_region,
         aws_region,
     )
-    text = ">VPC S3 endpoint creation failed. Please do the following to create an endpoint manually:\n"
+    text = (
+        ">VPC S3 endpoint creation failed. Please do the following to create an "
+        "endpoint manually:\n"
+    )
     text += "1. Go to [VPC console | Endpoints](%s)\n" % url
     text += "2. Click on `Create Endpoint`. Select Service Name as `com.amazonaws.%s.s3`.\n" % (
         aws_region
     )
     text += (
-        "3. Next, select your Default VPC: `%s` and click the checkbox against the main Route Table ID\n"
-        % (default_vpc)
+        "3. Next, select your Default VPC: `%s` and click the checkbox against "
+        "the main Route Table ID\n" % (default_vpc)
     )
     text += "4. Select `Full Access` in policy and click on `Create Endpoint`\n"
     text += "5. That should be it! Now wait for a few seconds before proceeding to the next cell."
@@ -204,7 +211,9 @@ def generate_help_for_administrator_policy(role):
 def generate_help_for_experiment_manager_permissions(role):
     role_name = role.split("/")[-1]
     url = "https://console.aws.amazon.com/iam/home#/roles/%s" % role_name
-    text = ">It looks like your SageMaker role has insufficient premissions. Please do the following:\n"
+    text = (
+        ">Looks like your SageMaker role has insufficient premissions. Please do the following:\n"
+    )
     text += "1. Go to IAM console to edit current SageMaker role: [%s](%s).\n" % (role_name, url)
     text += (
         "2. Click on policy starting with `AmazonSageMaker-ExecutionPolicy` and then edit policy.\n"
