@@ -8,4 +8,4 @@
 #     "PYTHONPATH": "${workspaceFolder}/src:${workspaceFolder}/src/share:${env:PYTHONPATH}"
 #   }
 # }
-PYTHONPATH=src:src/share:${PYTHONPATH}
+PYTHONPATH=src:${PYTHONPATH}
