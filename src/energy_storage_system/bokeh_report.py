@@ -68,7 +68,7 @@ def plot_analysis(df: pd.DataFrame, **kwargs) -> bk.models.plots.Plot:
     """
     kwargs = dict(**kwargs, show_figure=False)
     plots = [
-        df[["cost", "price"]].plot_bokeh(
+        df[["average_energy_cost", "market_electric_price"]].plot_bokeh(
             kind="line", title="Cost vs Price", **kwargs
         ),  # TODO: off tooltip on all-but-one line.
         df[["action"]].plot_bokeh(kind="scatter", title="Actions Taken", **kwargs),
