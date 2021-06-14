@@ -16,7 +16,7 @@ except ImportError:
     )
     from pathlib import Path
 
-from .report import Report, ReportIO
+from .utils import Report, ReportIO
 
 
 # Rewards chart.
