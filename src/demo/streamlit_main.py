@@ -263,8 +263,7 @@ def main(input_dir: Path, update_seconds: float = 0.5):
         )
         display_rewards(st_rewards, df_acc_rewards)
         display_metrics_table(st_metrics, *metrics)
-        # time.sleep(update_seconds)
-        time.sleep(0.5)
+        time.sleep(update_seconds)
 
     st.markdown("***")
 
@@ -277,14 +276,14 @@ if __name__ == "__main__":
         type=Path,
         nargs="?",
         default="data/streamlit_input",
-        help="Directory of exploitation results.",
+        help="Directory of exploitation results (default: data/streamlit_input).",
     )
     parser.add_argument(
         "-s",
         "--update-seconds",
         type=float,
         default=1,
-        help="Update charts for every specified seconds (a float).",
+        help="Update charts for every specified seconds in float (default: 1).",
     )
 
     # https://github.com/streamlit/streamlit/issues/337#issuecomment-544860528
