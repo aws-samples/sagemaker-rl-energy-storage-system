@@ -54,7 +54,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
     elif percentage <= 80:
         st_batt.markdown(
             """
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid"
+            fill="green">
                 <rect x="0.5" y="20.7" width="49" height="17.8" />
                 <rect x="0.5" y="40.7" width="49" height="17.8" />
                 <rect x="0.5" y="60.7" width="49" height="17.8" />
@@ -115,14 +116,22 @@ def display_action(st_act_text, st_act, action: int):
 
 
 def display_arrow(st):
+    s1 = (
+        "M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 "
+        "3.646 2.354a.5.5 0 0 1 0-.708z"
+    )
+    s2 = (
+        "M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 "
+        "7.646 2.354a.5.5 0 0 1 0-.708z"
+    )
     st.markdown(
-        """
+        f"""
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="200" fill="orange"
         class="bi bi-chevron-double-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd"
-                d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                d="{s1}" />
             <path fill-rule="evenodd"
-                d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                d="{s2}" />
         </svg>
         """,
         unsafe_allow_html=True,
