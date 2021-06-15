@@ -27,8 +27,8 @@ required_packages: List[str] = [
     "seaborn",
     "tensorflow==2.1.0",  # python 3.5 to 3.7
     "tqdm",
-    "streamlit==0.82.0",
-    "bokeh>=2.2.0,<2.3.0",  # https://github.com/streamlit/streamlit/issues/2156
+    "streamlit==0.82.*",
+    "bokeh==2.2.*",  # https://github.com/streamlit/streamlit/issues/2156
 ]
 
 # Specific use case dependencies
