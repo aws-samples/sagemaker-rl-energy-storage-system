@@ -1,12 +1,13 @@
+import argparse
+import os
 import time
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 import pandas_bokeh  # noqa
 import streamlit as st
 import streamlit.components.v1 as components
-
-st.set_page_config(layout="wide")
 
 
 def display_battery(st_batt_text, st_batt, percentage: int = 50):
@@ -203,48 +204,82 @@ def display_html_file(filename: str = "data/analysis.html"):
 # HMI
 #######################
 
-df = load_dqn_data()
-df_pvc = load_hist_data()
 
-st.header("Energy Storage Demo")
-st.markdown("***")
-st.text("")
+def main(input_dir: Path, update_seconds: float = 0.5):
+    st.set_page_config(layout="wide")
+    df = load_dqn_data(input_dir / "result_dqn.csv")
+    df_pvc = load_hist_data(input_dir / "result_hist_price_agent.csv")
 
-st.button("Run simulation")
-a1, b1, c1, d1, e1 = st.beta_columns((6, 1, 2, 1, 2))
-st_price, arrow1, st_act_text, st_act, arrow2, st_batt_text, st_batt = (
-    a1.empty(),
-    b1.empty(),
-    c1.empty(),
-    c1.empty(),
-    d1.empty(),
-    e1.empty(),
-    e1.empty(),
-)
-st_rewards = st.empty()
-st_metrics = st.empty()
+    st.header("Energy Storage Demo")
+    st.markdown("***")
+    st.text("")
 
-for index in range(100, df.shape[0] - 1, 1):
-    curr_df = df.iloc[:index]
-    curr_pvc_dr = df_pvc.iloc[:index]
-    print(curr_df.shape)
-    curr_price = int(curr_df.iloc[-1]["price"])
-    curr_cost = int(curr_df.iloc[-1]["cost"])
-    curr_energy = int(curr_df.iloc[-1]["energy"])
-    curr_action = int(curr_df.iloc[-1]["action"])
-    curr_total_reward = int(curr_df.iloc[-1]["total_reward"])
-    curr_energy_pct = int(curr_energy / 80 * 100)
-    metrics = (curr_price, curr_cost, curr_energy, curr_action, curr_total_reward)
+    st.button("Run simulation")
+    a1, b1, c1, d1, e1 = st.beta_columns((6, 1, 2, 1, 2))
+    st_price, arrow1, st_act_text, st_act, arrow2, st_batt_text, st_batt = (
+        a1.empty(),
+        b1.empty(),
+        c1.empty(),
+        c1.empty(),
+        d1.empty(),
+        e1.empty(),
+        e1.empty(),
+    )
+    st_rewards = st.empty()
+    st_metrics = st.empty()
 
-    display_price(st_price, curr_df[["price", "cost"]])
-    display_arrow(arrow1)
-    display_action(st_act_text, st_act, curr_action)
-    display_arrow(arrow2)
-    display_battery(st_batt_text, st_batt, curr_energy_pct)
+    for index in range(100, df.shape[0] - 1, 1):
+        curr_df = df.iloc[:index]
+        curr_pvc_dr = df_pvc.iloc[:index]
+        print(curr_df.shape)
+        curr_price = int(curr_df.iloc[-1]["price"])
+        curr_cost = int(curr_df.iloc[-1]["cost"])
+        curr_energy = int(curr_df.iloc[-1]["energy"])
+        curr_action = int(curr_df.iloc[-1]["action"])
+        curr_total_reward = int(curr_df.iloc[-1]["total_reward"])
+        curr_energy_pct = int(curr_energy / 80 * 100)
+        metrics = (curr_price, curr_cost, curr_energy, curr_action, curr_total_reward)
 
-    df_acc_rewards = pd.DataFrame({"RL": curr_df["total_reward"], "Baseline": curr_pvc_dr["total_reward"]})
-    display_rewards(st_rewards, df_acc_rewards)
-    display_metrics_table(st_metrics, *metrics)
-    time.sleep(0.5)
+        display_price(st_price, curr_df[["price", "cost"]])
+        display_arrow(arrow1)
+        display_action(st_act_text, st_act, curr_action)
+        display_arrow(arrow2)
+        display_battery(st_batt_text, st_batt, curr_energy_pct)
 
-st.markdown("***")
+        df_acc_rewards = pd.DataFrame(
+            {"RL": curr_df["total_reward"], "Baseline": curr_pvc_dr["total_reward"]}
+        )
+        display_rewards(st_rewards, df_acc_rewards)
+        display_metrics_table(st_metrics, *metrics)
+        # time.sleep(update_seconds)
+        time.sleep(0.5)
+
+    st.markdown("***")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "input_dir",
+        metavar="INPUT_DIR",
+        type=Path,
+        default="data",
+        help="Directory of exploitation results.",
+    )
+    parser.add_argument(
+        "-s",
+        "--update-seconds",
+        type=float,
+        default=0.5,
+        help="Update charts for every specified seconds (a float).",
+    )
+    # https://github.com/streamlit/streamlit/issues/337#issuecomment-544860528
+    try:
+        args = parser.parse_args()
+    except SystemExit as e:
+        # This exception will be raised if --help or invalid command line arguments
+        # are used. Currently streamlit prevents the program from exiting normally
+        # so we have to do a hard exit.
+        os._exit(e.code)
+
+    main(args.input_dir, args.update_seconds)
