@@ -22,19 +22,18 @@ required_packages: List[str] = [
     "gym",
     "matplotlib",
     "pandas",
-    "pandas_bokeh>=0.5.5",
+    "pandas_bokeh>=0.5.5",  # Older versions generate minor grids -> noisy chart
     "ray[rllib]==0.8.5",  # python 3.5 to 3.8
     "seaborn",
     "tensorflow==2.1.0",  # python 3.5 to 3.7
     "tqdm",
-    "streamlit==0.82.0",
-    "bokeh>=2.2.0",
+    "streamlit==0.82.*",
+    "bokeh==2.2.*",  # https://github.com/streamlit/streamlit/issues/2156
 ]
 
 # Specific use case dependencies
 extras = {
     "sagemaker": ["sagemaker"],
-
     # See: https://stackoverflow.com/a/53706140
     "direct_s3": ["smallmatter @ git+https://github.com/aws-samples/smallmatter-package"],
 }

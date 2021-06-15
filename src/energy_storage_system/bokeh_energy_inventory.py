@@ -14,17 +14,21 @@ except ImportError:
     )
     from pathlib import Path
 
-from .report import Report, ReportIO
+from .utils import Report, ReportIO
 
 
 def load_energy_inventories(input_dir: Path) -> pd.DataFrame:
     """Load energy inventory levels of all reports under ``input_dir/``."""
     dfs = []
     for report_dir in input_dir.iterdir():
-        report: Report = ReportIO(report_dir).load()
-        ser = report.df_history["energy"]
-        ser.rename(report_dir.name, inplace=True)
-        dfs.append(ser)
+        try:
+            report: Report = ReportIO(report_dir).load()
+            ser = report.df_history["energy"]
+            ser.rename(report_dir.name, inplace=True)
+            dfs.append(ser)
+        except Exception:
+            # Skip non-reports files or dirs, such as .DS_Store etc.
+            print("Skipping", report_dir)
 
     return pd.concat(dfs, axis=1)
 

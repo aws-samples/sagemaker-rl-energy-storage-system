@@ -1,12 +1,13 @@
+import argparse
+import os
 import time
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 import pandas_bokeh  # noqa
 import streamlit as st
 import streamlit.components.v1 as components
-
-st.set_page_config(layout="wide")
 
 
 def display_battery(st_batt_text, st_batt, percentage: int = 50):
@@ -16,7 +17,7 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="red">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border:black solid" fill="red">
                 <rect x="0.5" y="80.7" width="49" height="17.8" />
             </svg>
             </div>
@@ -27,7 +28,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border:black solid"
+            fill="green">
                 <rect x="0.5" y="60.7" width="49" height="17.8" />
                 <rect x="0.5" y="80.7" width="49" height="17.8" />
             </svg>
@@ -39,7 +41,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border:black solid"
+            fill="green">
                 <rect x="0.5" y="40.7" width="49" height="17.8" />
                 <rect x="0.5" y="60.7" width="49" height="17.8" />
                 <rect x="0.5" y="80.7" width="49" height="17.8" />
@@ -51,7 +54,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
     elif percentage <= 80:
         st_batt.markdown(
             """
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid"
+            fill="green">
                 <rect x="0.5" y="20.7" width="49" height="17.8" />
                 <rect x="0.5" y="40.7" width="49" height="17.8" />
                 <rect x="0.5" y="60.7" width="49" height="17.8" />
@@ -64,7 +68,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid"
+            fill="green">
                 <rect x="0.5" y="0.5" width="49" height="17.8" />
                 <rect x="0.5" y="20.7" width="49" height="17.8" />
                 <rect x="0.5" y="40.7" width="49" height="17.8" />
@@ -83,7 +88,7 @@ def display_action(st_act_text, st_act, action: int):
         st_act.markdown(
             """
             <svg width="100" height="200">
-            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="green" />
+            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="green"/>
             </svg>
             """,
             unsafe_allow_html=True,
@@ -103,7 +108,7 @@ def display_action(st_act_text, st_act, action: int):
         st_act.markdown(
             """
             <svg width="100" height="200">
-            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="white" />
+            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="white"/>
             </svg>
             """,
             unsafe_allow_html=True,
@@ -111,14 +116,22 @@ def display_action(st_act_text, st_act, action: int):
 
 
 def display_arrow(st):
+    s1 = (
+        "M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 "
+        "3.646 2.354a.5.5 0 0 1 0-.708z"
+    )
+    s2 = (
+        "M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 "
+        "7.646 2.354a.5.5 0 0 1 0-.708z"
+    )
     st.markdown(
-        """
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="200" fill="orange" class="bi bi-chevron-double-right"
-            viewBox="0 0 16 16">
+        f"""
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="200" fill="orange"
+        class="bi bi-chevron-double-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd"
-                d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                d="{s1}" />
             <path fill-rule="evenodd"
-                d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                d="{s2}" />
         </svg>
         """,
         unsafe_allow_html=True,
@@ -203,48 +216,83 @@ def display_html_file(filename: str = "data/analysis.html"):
 # HMI
 #######################
 
-df = load_dqn_data()
-df_pvc = load_hist_data()
 
-st.header("Energy Storage Demo")
-st.markdown("***")
-st.text("")
+def main(input_dir: Path, update_seconds: float = 0.5):
+    st.set_page_config(layout="wide")
+    df = load_dqn_data(input_dir / "result_dqn.csv")
+    df_pvc = load_hist_data(input_dir / "result_hist_price_agent.csv")
 
-st.button("Run simulation")
-a1, b1, c1, d1, e1 = st.beta_columns((6, 1, 2, 1, 2))
-st_price, arrow1, st_act_text, st_act, arrow2, st_batt_text, st_batt = (
-    a1.empty(),
-    b1.empty(),
-    c1.empty(),
-    c1.empty(),
-    d1.empty(),
-    e1.empty(),
-    e1.empty(),
-)
-st_rewards = st.empty()
-st_metrics = st.empty()
+    st.header("Energy Storage Demo")
+    st.markdown("***")
+    st.text("")
 
-for index in range(100, df.shape[0] - 1, 1):
-    curr_df = df.iloc[:index]
-    curr_pvc_dr = df_pvc.iloc[:index]
-    print(curr_df.shape)
-    curr_price = int(curr_df.iloc[-1]["price"])
-    curr_cost = int(curr_df.iloc[-1]["cost"])
-    curr_energy = int(curr_df.iloc[-1]["energy"])
-    curr_action = int(curr_df.iloc[-1]["action"])
-    curr_total_reward = int(curr_df.iloc[-1]["total_reward"])
-    curr_energy_pct = int(curr_energy / 80 * 100)
-    metrics = (curr_price, curr_cost, curr_energy, curr_action, curr_total_reward)
+    st.button("Run simulation")
+    a1, b1, c1, d1, e1 = st.beta_columns((6, 1, 2, 1, 2))
+    st_price, arrow1, st_act_text, st_act, arrow2, st_batt_text, st_batt = (
+        a1.empty(),
+        b1.empty(),
+        c1.empty(),
+        c1.empty(),
+        d1.empty(),
+        e1.empty(),
+        e1.empty(),
+    )
+    st_rewards = st.empty()
+    st_metrics = st.empty()
 
-    display_price(st_price, curr_df[["price", "cost"]])
-    display_arrow(arrow1)
-    display_action(st_act_text, st_act, curr_action)
-    display_arrow(arrow2)
-    display_battery(st_batt_text, st_batt, curr_energy_pct)
+    for index in range(100, df.shape[0] - 1, 1):
+        curr_df = df.iloc[:index]
+        curr_pvc_dr = df_pvc.iloc[:index]
+        print(curr_df.shape)
+        curr_price = int(curr_df.iloc[-1]["price"])
+        curr_cost = int(curr_df.iloc[-1]["cost"])
+        curr_energy = int(curr_df.iloc[-1]["energy"])
+        curr_action = int(curr_df.iloc[-1]["action"])
+        curr_total_reward = int(curr_df.iloc[-1]["total_reward"])
+        curr_energy_pct = int(curr_energy / 80 * 100)
+        metrics = (curr_price, curr_cost, curr_energy, curr_action, curr_total_reward)
 
-    df_acc_rewards = pd.DataFrame({"RL": curr_df["total_reward"], "Baseline": curr_pvc_dr["total_reward"]})
-    display_rewards(st_rewards, df_acc_rewards)
-    display_metrics_table(st_metrics, *metrics)
-    time.sleep(0.5)
+        display_price(st_price, curr_df[["price", "cost"]])
+        display_arrow(arrow1)
+        display_action(st_act_text, st_act, curr_action)
+        display_arrow(arrow2)
+        display_battery(st_batt_text, st_batt, curr_energy_pct)
 
-st.markdown("***")
+        df_acc_rewards = pd.DataFrame(
+            {"RL": curr_df["total_reward"], "Baseline": curr_pvc_dr["total_reward"]}
+        )
+        display_rewards(st_rewards, df_acc_rewards)
+        display_metrics_table(st_metrics, *metrics)
+        time.sleep(update_seconds)
+
+    st.markdown("***")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "input_dir",
+        metavar="INPUT_DIR",
+        type=Path,
+        nargs="?",
+        default="data/streamlit_input",
+        help="Directory of exploitation results (default: data/streamlit_input).",
+    )
+    parser.add_argument(
+        "-s",
+        "--update-seconds",
+        type=float,
+        default=1,
+        help="Update charts for every specified seconds in float (default: 1).",
+    )
+
+    # https://github.com/streamlit/streamlit/issues/337#issuecomment-544860528
+    try:
+        args = parser.parse_args()
+    except SystemExit as e:
+        # This exception will be raised if --help or invalid command line arguments
+        # are used. Currently streamlit prevents the program from exiting normally
+        # so we have to do a hard exit.
+        os._exit(e.code)
+
+    main(args.input_dir, args.update_seconds)
