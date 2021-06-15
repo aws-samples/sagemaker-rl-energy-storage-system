@@ -17,7 +17,7 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="red">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border:black solid" fill="red">
                 <rect x="0.5" y="80.7" width="49" height="17.8" />
             </svg>
             </div>
@@ -28,7 +28,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border:black solid"
+            fill="green">
                 <rect x="0.5" y="60.7" width="49" height="17.8" />
                 <rect x="0.5" y="80.7" width="49" height="17.8" />
             </svg>
@@ -40,7 +41,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border:black solid"
+            fill="green">
                 <rect x="0.5" y="40.7" width="49" height="17.8" />
                 <rect x="0.5" y="60.7" width="49" height="17.8" />
                 <rect x="0.5" y="80.7" width="49" height="17.8" />
@@ -65,7 +67,8 @@ def display_battery(st_batt_text, st_batt, percentage: int = 50):
         st_batt.markdown(
             """
             <div class="container">
-            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid" fill="green">
+            <svg viewBox="0 0 50 100" width="50" height="100" style="border: black solid"
+            fill="green">
                 <rect x="0.5" y="0.5" width="49" height="17.8" />
                 <rect x="0.5" y="20.7" width="49" height="17.8" />
                 <rect x="0.5" y="40.7" width="49" height="17.8" />
@@ -84,7 +87,7 @@ def display_action(st_act_text, st_act, action: int):
         st_act.markdown(
             """
             <svg width="100" height="200">
-            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="green" />
+            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="green"/>
             </svg>
             """,
             unsafe_allow_html=True,
@@ -104,7 +107,7 @@ def display_action(st_act_text, st_act, action: int):
         st_act.markdown(
             """
             <svg width="100" height="200">
-            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="white" />
+            <rect x="2" y="0" height="80" width="80" stroke="orange" stroke-width="2" fill="white"/>
             </svg>
             """,
             unsafe_allow_html=True,
@@ -114,8 +117,8 @@ def display_action(st_act_text, st_act, action: int):
 def display_arrow(st):
     st.markdown(
         """
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="200" fill="orange" class="bi bi-chevron-double-right"
-            viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="200" fill="orange"
+        class="bi bi-chevron-double-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd"
                 d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
             <path fill-rule="evenodd"
@@ -263,16 +266,18 @@ if __name__ == "__main__":
         "input_dir",
         metavar="INPUT_DIR",
         type=Path,
-        default="data",
+        nargs="?",
+        default="data/streamlit_input",
         help="Directory of exploitation results.",
     )
     parser.add_argument(
         "-s",
         "--update-seconds",
         type=float,
-        default=0.5,
+        default=1,
         help="Update charts for every specified seconds (a float).",
     )
+
     # https://github.com/streamlit/streamlit/issues/337#issuecomment-544860528
     try:
         args = parser.parse_args()
