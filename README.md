@@ -14,7 +14,7 @@ In this example, the simulated battery environment take reference to the paper [
 
 The battery simulation environment contains publicly available electric price dataset from Australian Energy Market Operator (AEOM), which you can download from [here](https://aemo.com.au/en/energy-systems/electricity/national-electricity-market-nem/data-nem/aggregated-data) as well.
 
-You can choose to use one month of data or manually concatenate multiple months depending on your use cases.
+Alternatively, you can run the notebook in sequence as data will be downloaded via a `bin/download_data.sh` in notebook `notebooks/00_battery_sim_notebook.ipynb`.
 
 ## What will you learn
 
@@ -23,9 +23,17 @@ You can choose to use one month of data or manually concatenate multiple months 
 
 ## Setup
 
-Make sure your python virtual environment has necessary python packages installed.
+It is recommended to install the `energy_storage_system` Python package to a virtual environment.
 
-`pip install -r requirements.txt`
+```bash
+git clone https://github.com/aws-samples/sagemaker-rl-energy-storage-system.git
+cd sagemaker-rl-energy-storage-system
+
+# Activate the virtual environment where you want to install this repo.
+# ...
+
+pip install -e '.[all]'
+```
 
 ## How this repository is organized
 
@@ -43,6 +51,41 @@ Make sure your python virtual environment has necessary python packages installe
 |   |-- smnb_utils               # Helper functions used by sample notebooks
 |   `-- source_dir               # SageMaker training job's source_dir and entrypoint script
 `-- tests                        # Unit tests for SageMaker's ray launcher
+```
+
+## How to use this repository
+
+As a quick start, run the Jupyter notebooks under `notebooks/` in sequence. These notebooks include
+the end-to-end workflow, from downloading the sample data, training the agents, evaluating the
+agents, generating reports (both static and interactive), and generating the Streamlit visualization
+data.
+
+Once all the notebooks have completed, you should see directory `data/` that contains the agents
+output, reports, and Streamlit data. Please note that this `data/` directory is **NOT** versioned.
+
+To run the Streamlit demo, follow these commands:
+
+```bash
+# Make sure to activate the virtual environment where you've pip install this repo
+# ...
+
+# Make sure current directory is at GITROOT, e.g., sagemaker-rl-energy-storage-system/
+
+# Run the Streamlit app with default settings:
+# - INPUT_DIR = ./data/streamlit_input
+# - refresh rate at every 1 second
+streamlit run src/demo/streamlit_main.py
+```
+
+Note that you can also run Streamlit demo app with custom input directory and refresh rate (see
+the sample commands below).
+
+```bash
+# Show supported CLI args
+streamlit run src/demo/streamlit_main.py -- --help
+
+# Run with custom input directory and refresh rate
+streamlit run src/demo/streamlit_main.py -- /tmp/my-streamlit-data --update-seconds 0.5
 ```
 
 ## Security
