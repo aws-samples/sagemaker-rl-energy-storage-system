@@ -88,6 +88,8 @@ streamlit run src/demo/streamlit_main.py -- --help
 streamlit run src/demo/streamlit_main.py -- /tmp/my-streamlit-data --update-seconds 0.5
 ```
 
+> Upcoming: steps to run the Streamlit app on a SageMaker notebook instance.
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
