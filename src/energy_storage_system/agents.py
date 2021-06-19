@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
-from ..envs import SimpleBattery
+from .envs import SimpleBattery
 
 
 class Agent(ABC):
